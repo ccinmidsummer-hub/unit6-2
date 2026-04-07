@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sports Match Audio Player</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;padding:20px}
+h1{text-align:center;font-size:1.5rem;color:#38bdf8;margin-bottom:20px}
+.container{max-width:680px;margin:0 auto}
+.section{background:#1e293b;border-radius:14px;padding:24px;margin-bottom:16px;position:relative;border:1px solid #334155}
+.section-title{font-size:1.1rem;font-weight:700;color:#f59e0b;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title span{font-size:1.3rem}
+.text-block{background:#0f172a;border-radius:10px;padding:16px;font-size:.95rem;line-height:1.7;color:#cbd5e1;margin-bottom:14px;white-space:pre-line}
+.text-block .highlight{color:#38bdf8;font-weight:600}
+.text-block .label{color:#f59e0b;font-weight:600}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+button{background:#334155;border:1px solid #475569;color:#e2e8f0;padding:9px 18px;border-radius:8px;cursor:pointer;font-size:.9rem;transition:.2s;display:flex;align-items:center;gap:6px}
+button:hover{background:#475569}
+.play-btn{background:#0ea5e9;border-color:#0ea5e9}
+.play-btn:hover{background:#0284c7}
+.stop-btn{background:#ef4444;border-color:#ef4444}
+.stop-btn:hover{background:#dc2626}
+.global-controls{text-align:center;margin-bottom:20px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;align-items:center}
+.speed-select{background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:6px;padding:6px 10px;font-size:.9rem}
+.playing{box-shadow:0 0 0 2px #0ea5e9}
+.dialogue .speaker-a{color:#38bdf8}
+.dialogue .speaker-b{color:#a78bfa}
+</style>
+</head>
+<body>
+<h1>🏅 Sports Match — Audio Player</h1>
+
+<div class="global-controls">
+<button class="play-btn" onclick="playAll()">▶ 播放全部</button>
+<button class="stop-btn" onclick="stopAll()">⏹ 停止</button>
+<label style="color:#94a3b8;font-size:.9rem">语速:</label>
+<select class="speed-select" id="rate">
+<option value="0.6">慢</option>
+<option value="0.8" selected>正常</option>
+<option value="1.0">快</option>
+</select>
+</div>
+
+<div class="container">
+
+<div class="section" id="s1">
+<div class="section-title"><span>🏓</span> Poster 1 — Table Tennis Match</div>
+<div class="text-block">INTERNATIONAL TABLE TENNIS MATCH
+China vs. Japan
+
+Place: Capital Gymnasium
+Time: 7:30 p.m., November 23, 2023
+Price: 90 to 300 yuan
+Ticket Office: The Youth Club</div>
+<div class="btn-row">
+<button class="play-btn" onclick="speakSection(0)">🔊 朗读</button>
+</div>
+</div>
+
+<div class="section" id="s2">
+<div class="section-title"><span>⚽</span> Poster 2 — Football Match</div>
+<div class="text-block">You won't want to miss this!
+EXCELLENT INTERNATIONAL FOOTBALL MATCH
+China vs. Switzerland
+
+Place: Capital Stadium
+Time: 3:30 p.m., December 18, 2023
+Price: 80 to 260 yuan
+
+Please book and buy tickets on the official App or at the Reception Office.
+Everyone is welcome to come and cheer for the teams!</div>
+<div class="btn-row">
+<button class="play-btn" onclick="speakSection(1)">🔊 朗读</button>
+</div>
+</div>
+
+<div class="section" id="s3">
+<div class="section-title"><span>🏐</span> Dialogue — Volleyball Match</div>
+<div class="text-block dialogue"><span class="speaker-a">A:</span> Hi, Mike. Are you interested in going to watch a volleyball match?
+<span class="speaker-b">B:</span> Oh, of course. Men's or women's?
+<span class="speaker-a">A:</span> It's an international women's volleyball match between China and Cuba.
+<span class="speaker-b">B:</span> Wonderful! The Chinese volleyball team is my favorite. What time will it start?
+<span class="speaker-a">A:</span> 7:00 p.m., October 15. That's next Tuesday evening. Can you make it?
+<span class="speaker-b">B:</span> Yes, I'll be free after 4:30. Where will the match be held?
+<span class="speaker-a">A:</span> The City Stadium. It's far away. But there will be a school bus leaving at 6:00 p.m. from the university.
+<span class="speaker-b">B:</span> Good. I think I can manage it. Well, where can we get the tickets?
+<span class="speaker-a">A:</span> Tickets are limited to 100 in our university. We can book them now at the Students' Union.
+<span class="speaker-b">B:</span> OK. Let's go there right away.</div>
+<div class="btn-row">
+<button class="play-btn" onclick="speakSection(2)">🔊 朗读</button>
+</div>
+</div>
+
+<div class="section" id="s4">
+<div class="section-title"><span>📋</span> Poster 3 — Volleyball Poster (Answer)</div>
+<div class="text-block">INTERNATIONAL WOMEN'S VOLLEYBALL MATCH
+CHINESE TEAM VS. CUBAN TEAM
+
+Place: The City Stadium
+Time: 7:00 p.m., October 15, Tuesday
+Tickets from the Students' Union, limited to 100!
+A school bus is available, leaving at 6:00 p.m. from the university.</div>
+<div class="btn-row">
+<button class="play-btn" onclick="speakSection(3)">🔊 朗读</button>
+</div>
+</div>
+
+</div>
+
+<script>
+const texts=[
+`International Table Tennis Match. China versus Japan. Place: Capital Gymnasium. Time: 7:30 p.m., November 23rd, 2023. Price: 90 to 300 yuan. Ticket Office: The Youth Club.`,
+
+`You won't want to miss this! Excellent International Football Match. China versus Switzerland. Place: Capital Stadium. Time: 3:30 p.m., December 18th, 2023. Price: 80 to 260 yuan. Please book and buy tickets on the official App or at the Reception Office. Everyone is welcome to come and cheer for the teams!`,
+
+`A: Hi, Mike. Are you interested in going to watch a volleyball match?
+B: Oh, of course. Men's or women's?
+A: It's an international women's volleyball match between China and Cuba.
+B: Wonderful! The Chinese volleyball team is my favorite. What time will it start?
+A: 7:00 p.m., October 15th. That's next Tuesday evening. Can you make it?
+B: Yes, I'll be free after 4:30. Where will the match be held?
+A: The City Stadium. It's far away. But there will be a school bus leaving at 6:00 p.m. from the university.
+B: Good. I think I can manage it. Well, where can we get the tickets?
+A: Tickets are limited to 100 in our university. We can book them now at the Students' Union.
+B: OK. Let's go there right away.`,
+
+`International Women's Volleyball Match. Chinese Team versus Cuban Team. Place: The City Stadium. Time: 7:00 p.m., October 15th, Tuesday. Tickets from the Students' Union, limited to 100! A school bus is available, leaving at 6:00 p.m. from the university.`
+];
+
+let currentSection=-1, playingAll=false;
+
+function getRate(){return parseFloat(document.getElementById('rate').value)}
+
+function speakSection(i){
+speechSynthesis.cancel();
+playingAll=false;
+clearHighlights();
+document.getElementById('s'+(i+1)).classList.add('playing');
+const u=new SpeechSynthesisUtterance(texts[i]);
+u.lang='en-US';u.rate=getRate();
+u.onend=()=>clearHighlights();
+speechSynthesis.speak(u);
+}
+
+function playAll(){
+speechSynthesis.cancel();
+playingAll=true;currentSection=0;
+playNext();
+}
+
+function playNext(){
+if(!playingAll||currentSection>=texts.length){playingAll=false;clearHighlights();return}
+clearHighlights();
+document.getElementById('s'+(currentSection+1)).classList.add('playing');
+const u=new SpeechSynthesisUtterance(texts[currentSection]);
+u.lang='en-US';u.rate=getRate();
+u.onend=()=>{currentSection++;setTimeout(playNext,600)};
+speechSynthesis.speak(u);
+}
+
+function stopAll(){speechSynthesis.cancel();playingAll=false;clearHighlights()}
+function clearHighlights(){document.querySelectorAll('.section').forEach(s=>s.classList.remove('playing'))}
+</script>
+</body>
+</html>
